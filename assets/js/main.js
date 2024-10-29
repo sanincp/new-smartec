@@ -22,7 +22,29 @@
             $(this).html(countNumber);
         });
     });
-    
+  document.addEventListener("DOMContentLoaded", function () {
+    let currentIndex = 0;
+    const tabs = document.querySelectorAll(".hero-tablist .nav-link");
+    const totalTabs = tabs.length;
+
+    // Function to switch tabs
+    function switchTab() {
+      // Remove active classes from current tab
+      tabs[currentIndex].classList.remove("active");
+      document.querySelector(tabs[currentIndex].getAttribute("data-bs-target")).classList.remove("show", "active");
+
+      // Move to next tab or reset to first
+      currentIndex = (currentIndex + 1) % totalTabs;
+
+      // Add active classes to new tab
+      tabs[currentIndex].classList.add("active");
+      document.querySelector(tabs[currentIndex].getAttribute("data-bs-target")).classList.add("show", "active");
+    }
+
+    // Set interval to switch tabs every 5 seconds
+    setInterval(switchTab, 5000); // 5000ms = 5 seconds
+  });
+
     // Hero Slider
     var owl = $('.hero-slider-one');
     owl.owlCarousel({
@@ -790,3 +812,21 @@ function toggleTheme() {
         document.getElementById('slider').checked = true;
     }
 })();
+const inputs = document.querySelectorAll(".unique-input");
+
+function focusFunc() {
+  let parent = this.parentNode;
+  parent.classList.add("unique-focus");
+}
+
+function blurFunc() {
+  let parent = this.parentNode;
+  if (this.value == "") {
+    parent.classList.remove("unique-focus");
+  }
+}
+
+inputs.forEach((input) => {
+  input.addEventListener("focus", focusFunc);
+  input.addEventListener("blur", blurFunc);
+});
